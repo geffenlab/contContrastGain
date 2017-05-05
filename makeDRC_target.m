@@ -16,6 +16,10 @@ for i = 1:length(d)
 end
 
 % add in target amp and target time
+mua = amp70 .* ...
+    10 .^ ((MU-70)./20);
+ind = round(tt) / cd;
+amps(:,ind) = amps(:,ind) + (ta-mua);
 
 
 % make a waveform

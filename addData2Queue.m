@@ -1,8 +1,19 @@
-function addData2Queue(src,event,data,events,cnt)
+function addData2Queue(src,event)
+global g;
 
-if mod(cnt,2) 
-    queueOutputData(src,[data(1,:); events]');
+g.cnt = g.cnt + 1;
+% use the next alternating block
+if mod(g.cnt,2)
+    % odd trial = low
+    data = g.noise(1,:);
 else
-    queueOutputData(src,[data(2,:); events]');
+    % even trial = high
+    data = g.noise(2,:);
 end
-cnt = cnt + 1;
+
+str = {'High','Low'};
+
+% queue the data
+queueOutputData(g.s,[data*10; g.events]');
+fprintf('Trial %03d - %s contrast\n',g.cnt,str{mod(g.cnt,2)+1});
+
